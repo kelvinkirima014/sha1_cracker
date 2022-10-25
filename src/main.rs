@@ -26,6 +26,7 @@ fn main() -> Result<(), Box<dyn Error>> {
     let mut file_contents = String::new();
     read_file.read_to_string(&mut file_contents)?;
     for line in read_file.lines(){
+
         println!("{}", line?);
     }
 
