@@ -21,10 +21,10 @@ fn main() -> Result<(), Box<dyn Error>> {
     }
 
     let f = File::open(&args[1])?;
-    let mut read_file = BufReader::new(f);
-    // let reader = BufReader::new(wordlist_file);
+    let mut read_file = BufReader::new(&f);
     let mut file_contents = String::new();
     read_file.read_to_string(&mut file_contents)?;
+
     for line in read_file.lines(){
 
         println!("{}", line?);
