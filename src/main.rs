@@ -4,6 +4,7 @@ use std::{
     fs::File,
     io::{BufRead, BufReader, Read}
 };
+use sha1::Digest;
 
 const SHA1_HEX_STRING_LENGTH: usize = 40;
 fn main() -> Result<(), Box<dyn Error>> {
@@ -26,9 +27,13 @@ fn main() -> Result<(), Box<dyn Error>> {
     read_file.read_to_string(&mut file_contents)?;
 
     for line in read_file.lines(){
-
-        println!("{}", line?);
-    }
+        let line = line?;
+        let common_password = line.trim();
+        if hash_to_crack == &hex::encode(sha1::Sha1::digest(common_password.as_bytes())){
+            println!("Password Found: {}", common_password);
+            return Ok(());
+        }
+    } println!("Password not found in wordlist :(");
 
     Ok(())
 }
